@@ -59,24 +59,4 @@ body{margin:0;font-family:Arial,sans-serif;background:#fdeef3;display:flex;justi
   const estado = document.getElementById("estado");
 
   if(!id){
-    estado.textContent = "No se encontró ?id= en la URL";
-    return;
-  }
-
-  try{
-    const res = await fetch("https://api.jsonbin.io/v3/b/" + encodeURIComponent(id) + "/latest", {
-      headers: { "X-Master-Key": "TU_API_KEY_JSONBIN" }
-    });
-    const data = await res.json();
-    const record = data.record;
-
-    document.getElementById("nombreD").textContent = record.nombreD || "";
-    document.getElementById("correo").textContent  = record.correoD || "";
-    document.getElementById("nombreM").textContent = record.nombreM || "";
-    document.getElementById("telefono").textContent = record.telefono || "";
-    document.getElementById("descripcion").textContent = record.descripcion || "";
-
-    if(record.fotoUrl) document.getElementById("foto").src = record.fotoUrl;
-    if(record.certUrl) document.getElementById("certificado").src = record.certUrl;
-
-    estado.textContent = "Datos
+    estado.textContent = "No se encontró ?id=
