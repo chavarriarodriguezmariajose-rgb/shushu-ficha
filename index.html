@@ -6,52 +6,15 @@
 <title>Ficha SHUSHU</title>
 
 <style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#fdeef3;
-  display:flex;
-  justify-content:center;
-  padding:20px;
-}
-.shu-card{
-  background:#fff;
-  max-width:420px;
-  width:100%;
-  border-radius:18px;
-  padding:18px;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
-}
-.shu-title{
-  text-align:center;
-  font-size:22px;
-  font-weight:700;
-  color:#4b2e24;
-  margin-bottom:14px;
-}
-.shu-row{
-  margin-bottom:10px;
-  font-size:15px;
-  color:#4b2e24;
-}
-.shu-row strong{
-  color:#000;
-}
-.shu-section{
-  margin-top:16px;
-}
-.shu-desc{
-  background:#fdeef3;
-  padding:10px;
-  border-radius:10px;
-  font-size:14px;
-  white-space:pre-wrap;
-}
-.shu-status{
-  margin-top:14px;
-  font-size:12px;
-  color:#7a4a3b;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#fdeef3;display:flex;justify-content:center;padding:20px}
+.shu-card{background:#fff;max-width:420px;width:100%;border-radius:18px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.shu-title{text-align:center;font-size:22px;font-weight:700;color:#4b2e24;margin-bottom:14px}
+.shu-row{margin-bottom:10px;font-size:15px;color:#4b2e24}
+.shu-row strong{color:#000}
+.shu-section{margin-top:16px}
+.shu-desc{background:#fdeef3;padding:10px;border-radius:10px;font-size:14px;white-space:pre-wrap}
+.shu-img{margin-top:12px;max-width:100%;border-radius:10px;border:2px solid #f2c7d9}
+.shu-status{margin-top:14px;font-size:12px;color:#7a4a3b}
 </style>
 </head>
 
@@ -70,12 +33,21 @@ body{
     <div class="shu-desc" id="descripcion">—</div>
   </div>
 
+  <div class="shu-section">
+    <strong>Foto del perro:</strong>
+    <img id="foto" class="shu-img" src="" alt="Foto perro">
+  </div>
+
+  <div class="shu-section">
+    <strong>Certificado:</strong>
+    <img id="certificado" class="shu-img" src="" alt="Certificado">
+  </div>
+
   <div class="shu-status" id="estado">Estado: cargando…</div>
 </div>
 
 <script>
-(function(){
-  // Función robusta para leer parámetros de la URL
+(async function(){
   function getParam(name){
     const href = String(window.location.href);
     const re = new RegExp('[?&]' + name + '=([^&#]+)');
@@ -83,18 +55,28 @@ body{
     return m ? decodeURIComponent(m[1]) : null;
   }
 
-  const estado = document.getElementById('estado');
-  const id = getParam('id');
+  const id = getParam("id");
+  const estado = document.getElementById("estado");
 
   if(!id){
-    estado.textContent = 'Estado: no se encontró ?id= en la URL.';
+    estado.textContent = "No se encontró ?id= en la URL";
     return;
   }
 
-  // Para probar que sí lee el parámetro, muéstralo directamente
-  estado.textContent = 'Estado: parámetro id recibido = ' + id;
+  try{
+    const res = await fetch("https://api.jsonbin.io/v3/b/" + encodeURIComponent(id) + "/latest", {
+      headers: { "X-Master-Key": "TU_API_KEY_JSONBIN" }
+    });
+    const data = await res.json();
+    const record = data.record;
 
-  // Aquí pondrías la lógica para buscar los datos (JSONBin o lo que uses).
-  // Por ahora, solo mostramos el id para confirmar que se lee bien.
-})();
-</script>
+    document.getElementById("nombreD").textContent = record.nombreD || "";
+    document.getElementById("correo").textContent  = record.correoD || "";
+    document.getElementById("nombreM").textContent = record.nombreM || "";
+    document.getElementById("telefono").textContent = record.telefono || "";
+    document.getElementById("descripcion").textContent = record.descripcion || "";
+
+    if(record.fotoUrl) document.getElementById("foto").src = record.fotoUrl;
+    if(record.certUrl) document.getElementById("certificado").src = record.certUrl;
+
+    estado.textContent = "Datos
