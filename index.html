@@ -59,4 +59,36 @@ body{margin:0;font-family:Arial,sans-serif;background:#fdeef3;display:flex;justi
   const estado = document.getElementById("estado");
 
   if(!id){
-    estado.textContent = "No se encontró ?id=
+    estado.textContent = "No se encontró ?id= en la URL";
+    return;
+  }
+
+  try{
+    const res = await fetch("https://api.jsonbin.io/v3/b/" + encodeURIComponent(id) + "/latest", {
+      headers: { "X-Master-Key": "$2a$10$Z8yhv5acGXY4MTyDFrxUM.zEBn3BlkQ9cK6X/GbM2TKFQCurq.qwy" }
+    });
+    if(!res.ok){
+      estado.textContent = "Error al leer datos de JSONBin";
+      return;
+    }
+    const data = await res.json();
+    const record = data.record;
+
+    document.getElementById("nombreD").textContent = record.nombreD || "—";
+    document.getElementById("correo").textContent  = record.correo || "—";
+    document.getElementById("nombreM").textContent = record.nombreM || "—";
+    document.getElementById("telefono").textContent = record.telefono || "—";
+    document.getElementById("descripcion").textContent = record.descripcion || "—";
+
+    if(record.fotoUrl) document.getElementById("foto").src = record.fotoUrl;
+    if(record.certUrl) document.getElementById("certificado").src = record.certUrl;
+
+    estado.textContent = "Datos cargados correctamente.";
+  } catch(err){
+    estado.textContent = "Error: " + err.message;
+  }
+})();
+</script>
+
+</body>
+</html>
