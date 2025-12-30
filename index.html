@@ -8,6 +8,8 @@
 body{margin:0;font-family:Arial,sans-serif;background:#fdeef3;display:flex;justify-content:center;padding:20px}
 .shu-card{background:#fff;max-width:420px;width:100%;border-radius:18px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,.08)}
 .shu-title{text-align:center;font-size:22px;font-weight:700;color:#4b2e24;margin-bottom:14px}
+.shu-aviso{background:#fdeef3;border:2px solid #f2c7d9;border-radius:12px;padding:12px;margin-bottom:16px;font-size:14px;color:#4b2e24}
+.shu-aviso strong{display:block;margin-bottom:6px;color:#000}
 .shu-row{margin-bottom:10px;font-size:15px;color:#4b2e24}
 .shu-row strong{color:#000}
 .shu-section{margin-top:16px}
@@ -19,19 +21,33 @@ body{margin:0;font-family:Arial,sans-serif;background:#fdeef3;display:flex;justi
 <body>
 <div class="shu-card">
   <div class="shu-title">Ficha SHUSHU</div>
+
+  <!-- Aviso legal -->
+  <div class="shu-aviso">
+    <strong>⚖️ Aviso legal en México</strong>
+    Es importante respetar el trabajo de los perros guía.  
+    La Ley Federal para Prevenir y Eliminar la Discriminación y otras normativas mexicanas reconocen el derecho de las personas con discapacidad visual a desplazarse acompañadas de sus perros guía en espacios públicos y privados.  
+    <a href="https://www.shushu.blog/leyes-que-protejen-a-los-perros-guia" target="_blank">Ver más sobre estas leyes</a>
+  </div>
+
+  <!-- Datos de la ficha -->
   <div class="shu-row"><strong>Dueño:</strong> <span id="nombreD">—</span></div>
   <div class="shu-row"><strong>Correo:</strong> <span id="correo">—</span></div>
   <div class="shu-row"><strong>Mascota:</strong> <span id="nombreM">—</span></div>
   <div class="shu-row"><strong>Teléfono:</strong> <span id="telefono">—</span></div>
+
   <div class="shu-section"><strong>Descripción:</strong>
     <div class="shu-desc" id="descripcion">—</div>
   </div>
+
   <div class="shu-section"><strong>Foto del perro:</strong>
     <img id="foto" class="shu-img" src="" alt="Foto perro">
   </div>
+
   <div class="shu-section"><strong>Certificado:</strong>
     <img id="certificado" class="shu-img" src="" alt="Certificado">
   </div>
+
   <div class="shu-status" id="estado">Estado: cargando…</div>
 </div>
 
